@@ -24,6 +24,7 @@ CREATE TABLE CUSTOMER_TIER (
     customer_id VARCHAR(4) PRIMARY KEY,
     customer_name VARCHAR(60),
     customer_category VARCHAR(25),
+    tier_code VARCHAR(2) NOT NULL ,
     -- Column : tier_code AA CE
     FOREIGN KEY(tier_code) REFERENCES TIER(tier_code)
 );
@@ -35,29 +36,29 @@ SELECT tablename FROM pg_tables WHERE schemaname ='public';
 
 INSERT INTO CUSTOMER_TIER
 VALUES
-    ('CT01', 'Global Wholesale Solutions', 'WHOLESALER', 'TIER 1', 'AA'),     
-    ('CT02', 'Premium Distributors Co.', 'WHOLESALER', 'TIER 2', 'AB'),     
-    ('CT03', 'Mega Supply Network'  , 'WHOLESALER', 'TIER 3', 'AC'),           
-    ('CT04', 'City Mart Retail' , 'RETAILER', 'TIER 1', 'BA'),   
-    ('CT05', 'Cornerstone Brands Inc.', 'RETAILER', 'TIER 2', 'BB'),   
-    ('CT06', 'Elite Wholesale Group', 'WHOLESALER', 'TIER 1', 'AA'),         
-    ('CT07', 'Unity Logistics & Supply', 'WHOLESALER', 'TIER 2', 'AB'),          
-    ('CT08', 'Apex Bulk Goods',   'WHOLESALER', 'TIER 3', 'AC'),                
-    ('CT09', 'Horizon Trading Post', 'RETAILER', 'TIER 1', 'BA'),   
-    ('CT10', 'Prime Source Distributors', 'WHOLESALER', 'TIER 2', 'AB'),        
-    ('CT11', 'Grand Scale Supply Co.' , 'WHOLESALER', 'TIER 3', 'AC'),  
-    ('CT12', 'Discount Deals Outlet', 'RETAILER', 'TIER 1', 'BA'),   
-    ('CT13', 'Continental Wholesale Group', 'WHOLESALER', 'TIER 1', 'AA'),  
-    ('CT14', 'The Daily Essentials Store', 'RETAILER', 'TIER 1', 'BA'),   
-    ('CT15', 'Bright Future Electronics', 'RETAILER', 'TIER 2', 'BB'),   
-    ('CT16', 'Pioneer Wholesale Exports',  'WHOLESALER', 'TIER 2', 'AB'),         
-    ('CT17', 'Reliable Trade Partners' , 'WHOLESALER', 'TIER 3', 'AC'),   
-    ('CT18', 'Dynamic Distribution Hub', 'WHOLESALER', 'TIER 1', 'AA'),
-    ('CT19', 'Frontier Global Trading', 'RETAILER', 'TIER 2', 'BB'),    
-    ('CT21', 'Alliance Wholesalers Ltd.', 'WHOLESALER', 'TIER 2', 'AB'),  
-    ('CT22', 'Northern Star Wholesale', 'WHOLESALER', 'TIER 1', 'AA'),       
-    ('CT23', 'Central Bulk Supplies', 'WHOLESALER', 'TIER 3', 'AC'),         
-    ('CT24', 'Tech Gadget Gallery', 'RETAILER', 'TIER 2', 'BB');       
+    ('CT01', 'Global Wholesale Solutions', 'WHOLESALER', 'AA'),     
+    ('CT02', 'Premium Distributors Co.', 'WHOLESALER', 'AB'),     
+    ('CT03', 'Mega Supply Network'  , 'WHOLESALER', 'AC'),           
+    ('CT04', 'City Mart Retail' , 'RETAILER', 'BA'),   
+    ('CT05', 'Cornerstone Brands Inc.', 'RETAILER', 'BB'),   
+    ('CT06', 'Elite Wholesale Group', 'WHOLESALER', 'AA'),         
+    ('CT07', 'Unity Logistics & Supply', 'WHOLESALER', 'AB'),          
+    ('CT08', 'Apex Bulk Goods',   'WHOLESALER', 'AC'),                
+    ('CT09', 'Horizon Trading Post', 'RETAILER', 'BA'),   
+    ('CT10', 'Prime Source Distributors', 'WHOLESALER', 'AB'),        
+    ('CT11', 'Grand Scale Supply Co.' , 'WHOLESALER', 'AC'),  
+    ('CT12', 'Discount Deals Outlet', 'RETAILER', 'BA'),   
+    ('CT13', 'Continental Wholesale Group', 'WHOLESALER', 'AA'),  
+    ('CT14', 'The Daily Essentials Store', 'RETAILER', 'BA'),   
+    ('CT15', 'Bright Future Electronics', 'RETAILER', 'BB'),   
+    ('CT16', 'Pioneer Wholesale Exports',  'WHOLESALER', 'AB'),         
+    ('CT17', 'Reliable Trade Partners' , 'WHOLESALER', 'AC'),   
+    ('CT18', 'Dynamic Distribution Hub', 'WHOLESALER', 'AA'),
+    ('CT19', 'Frontier Global Trading', 'RETAILER', 'BB'),    
+    ('CT21', 'Alliance Wholesalers Ltd.', 'WHOLESALER', 'AB'),  
+    ('CT22', 'Northern Star Wholesale', 'WHOLESALER', 'AA'),       
+    ('CT23', 'Central Bulk Supplies', 'WHOLESALER', 'AC'),         
+    ('CT24', 'Tech Gadget Gallery', 'RETAILER', 'BB');       
       
 SELECT * FROM CUSTOMER_TIER;
 
