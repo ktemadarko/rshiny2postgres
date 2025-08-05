@@ -4,6 +4,8 @@ CREATE TABLE PRODUCT (
     product_description VARCHAR(35)
 );
 
+SELECT * FROM PRODUCT;
+
 INSERT INTO PRODUCT (product_id, product_description)
 VALUES
     ('P01', 'Laptop'),
@@ -22,11 +24,14 @@ CREATE TABLE CUSTOMER_TIER (
     customer_id VARCHAR(4) PRIMARY KEY,
     customer_name VARCHAR(60),
     customer_category VARCHAR(25),
-    -- Column tier_type eg. STANDARD TIER, TIER 1
-    tier_type VARCHAR(13) NOT NULL,
     -- Column : tier_code AA CE
-    tier_code VARCHAR(2) NOT NULL
+    FOREIGN KEY(tier_code) REFERENCES TIER(tier_code)
 );
+
+SELECT tablename FROM pg_tables WHERE schemaname ='public';
+
+-- SPLIT THE TABLE COLUMNS SO AA AND TIER 1 IS IN THE TIER TABLE
+-- SO I REMOVED THE TIER_TYPE COLUMN
 
 INSERT INTO CUSTOMER_TIER
 VALUES
@@ -54,12 +59,51 @@ VALUES
     ('CT23', 'Central Bulk Supplies', 'WHOLESALER', 'TIER 3', 'AC'),         
     ('CT24', 'Tech Gadget Gallery', 'RETAILER', 'TIER 2', 'BB');       
       
+SELECT * FROM CUSTOMER_TIER;
+
+-- MISTAKE IN THE NUMBER OF CUSTOMER TIER NO CT20
+-- THE QUERIES BELOW HELP EDIT THEM
+
+UPDATE public.customer_tier SET
+customer_id = 'CT20'::character varying WHERE
+customer_id = 'CT21';
+
+UPDATE public.customer_tier SET
+customer_id = 'CT21'::character varying WHERE
+customer_id = 'CT22';
+
+UPDATE public.customer_tier SET
+customer_id = 'CT22'::character varying WHERE
+customer_id = 'CT23';
+
+UPDATE public.customer_tier SET
+customer_id = 'CT23'::character varying WHERE
+customer_id = 'CT24';
+
+
+-- I was getting this error 
+-- ERROR:  there is no unique constraint matching given keys for referenced table "customer_tier" 
+-- meaning every foreign key must refer to a primary key of another table
+
+CREATE TABLE TIER (
+	tier_code VARCHAR(2) NOT NULL PRIMARY KEY,
+	tier_type VARCHAR(6) NOT NULL	
+);
+
+INSERT INTO TIER
+VALUES
+	('AA','TIER 1'),
+	('AB','TIER 2'),
+	('AC','TIER 3'),
+	('BA','TIER 1'),
+	('BB','TIER 2');
+	
 
 -- table to find the price of the product  year = 2025, tier = AA
 CREATE TABLE PRICE_BY_YEAR (
     
     year_id DATE ,
-    product_id CHAR(6) NOT NULL , 
+    product_id CHAR(3) NOT NULL , 
     tier_code VARCHAR(2) NOT NULL ,
     ghs_price DECIMAL(10,2) NOT NULL ,
 
@@ -70,7 +114,7 @@ CREATE TABLE PRICE_BY_YEAR (
 
     -- Setting up a foreign key constraint referencing the 'tier_code' column in the
     -- 'CUSTOMER_TIER' table
-    FOREIGN KEY(tier_code) REFERENCES CUSTOMER_TIER(tier_code) ,
+    FOREIGN KEY(tier_code) REFERENCES TIER(tier_code) ,
 
     FOREIGN KEY(product_id) REFERENCES PRODUCT(product_id)
     
@@ -80,3 +124,25 @@ CREATE TABLE PRICE_BY_YEAR (
 
 );
 
+INSERT INTO PRICE_BY_YEAR
+VALUES
+    (2024, 'P01', "AA", )
+
+
+-- table to find the price of the product  year = 2025, tier = AA
+-- THIS WILL BE A STANDARD table all to build out the PRICE_BY_YEAR TABLE
+
+CREATE TABLE STANDARD_PRICE_BY_YEAR (
+    
+    year_id DATE ,
+    product_id CHAR(3) NOT NULL , 
+    tier_code VARCHAR(2) NOT NULL DEFAULT 'AA' ,
+    ghs_price DECIMAL(10,2) NOT NULL ,
+
+    PRIMARY KEY (year_id, product_id, tier_code) ,
+    
+    FOREIGN KEY(tier_code) REFERENCES TIER(tier_code) ,
+
+    FOREIGN KEY(product_id) REFERENCES PRODUCT(product_id)
+    
+);
